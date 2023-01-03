@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Avatar, IconButton } from '@mui/material';
 import Image from 'next/image';
 import ChatIcon from '@mui/icons-material/Chat';
+import CustomMoreVertical from './CustomMoreVertical';
 
 const Sidebar = () => {
   return (
@@ -15,6 +16,7 @@ const Sidebar = () => {
           <IconButton>
             <ChatIcon />
           </IconButton>
+          <CustomMoreVertical />
         </IconsGroup>
       </Header>
     </Container>
