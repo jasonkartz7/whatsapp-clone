@@ -1,11 +1,21 @@
 import styled from 'styled-components';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
+import Image from 'next/image';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const Sidebar = () => {
   return (
     <Container>
       <Header>
         <UserAvatar src="https://images.pexels.com/photos/210547/pexels-photo-210547.jpeg?autocompress&cs=tinysrgb&dpr=1&w=500" />
+        <IconsGroup>
+          <IconButton>
+            <Image src="/story.svg" alt="" width="24" height="24" />
+          </IconButton>
+          <IconButton>
+            <ChatIcon />
+          </IconButton>
+        </IconsGroup>
       </Header>
     </Container>
   );
@@ -39,3 +49,5 @@ const UserAvatar = styled(Avatar)`
     opacity: 0.8;
   }
 `;
+
+const IconsGroup = styled.div``;
