@@ -4,6 +4,8 @@ import Image from 'next/image';
 import ChatIcon from '@mui/icons-material/Chat';
 import CustomMoreVertical from './CustomMoreVertical';
 import SearchIcon from '@mui/icons-material/Search';
+import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const Sidebar = () => {
   return (
@@ -20,6 +22,22 @@ const Sidebar = () => {
           <CustomMoreVertical />
         </IconsGroup>
       </Header>
+      <Notification>
+        <NotificationAvatar>
+          <NotificationsOffIcon style={{ color: '#9DE1FE' }} />
+        </NotificationAvatar>
+        <NotificationText>
+          <div>Get Notified of New Messages</div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <a href="#">
+              <u>Turn On Desktop Notifications</u>
+            </a>
+            <IconButton>
+              <ArrowForwardIosIcon style={{ width: 15, height: 15 }} />
+            </IconButton>
+          </div>
+        </NotificationText>
+      </Notification>
       <SearchChat>
         <SearchBar>
           <SearchIcon />
@@ -78,4 +96,21 @@ const SearchBar = styled.div`
 const SeacrhInput = styled.input`
   width: 100%;
   border: none;
+`;
+
+const Notification = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #9de1fe;
+`;
+
+const NotificationAvatar = styled(Avatar)`
+  background-color: white;
+`;
+
+const NotificationText = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
