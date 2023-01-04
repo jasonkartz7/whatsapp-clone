@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import styled from 'styled-components';
 import { Avatar, IconButton } from '@mui/material';
 import Image from 'next/image';
@@ -6,12 +7,17 @@ import CustomMoreVertical from './CustomMoreVertical';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import chats from '../data/chat.json';
+import Chat from './Chat';
 
 const Sidebar = () => {
   return (
     <Container>
       <Header>
-        <UserAvatar src="https://images.pexels.com/photos/210547/pexels-photo-210547.jpeg?autocompress&cs=tinysrgb&dpr=1&w=500" />
+        <UserAvatar
+          src="https://images.pexels.com/photos/210547/
+        pexels-photo-210547.jpeg?autocompress&cs=tinysrgb&dpr=1&w=500"
+        />
         <IconsGroup>
           <IconButton>
             <Image src="/story.svg" alt="" width="24" height="24" />
@@ -44,6 +50,14 @@ const Sidebar = () => {
           <SeacrhInput />
         </SearchBar>
       </SearchChat>
+      {chats.map((chat) => (
+        <Chat
+          latestMessage={chat.latestMessage}
+          name={chat.name}
+          timestamp={chat.timestamp}
+          photoURL={chat.photoURL}
+        />
+      ))}
     </Container>
   );
 };
@@ -77,7 +91,9 @@ const UserAvatar = styled(Avatar)`
   }
 `;
 
-const IconsGroup = styled.div``;
+const IconsGroup = styled.div`
+  margin-left: 40%;
+`;
 
 const SearchChat = styled.div`
   background-color: #f6f6f6;
