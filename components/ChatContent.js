@@ -1,11 +1,11 @@
 import { Avatar, IconButton } from '@mui/material';
-import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MicIcon from '@mui/icons-material/Mic';
+import messages from '../data/messages.json';
 
 const ChatContent = () => {
   return (
@@ -13,7 +13,7 @@ const ChatContent = () => {
       <Header>
         <Avatar />
         <HeaderInfo>
-          <h3>Emma</h3>
+          <h3>Test</h3>
           <div>Last Active: 2 hours ago</div>
         </HeaderInfo>
         <IconButton>
@@ -23,6 +23,11 @@ const ChatContent = () => {
           <MoreVertIcon />
         </IconButton>
       </Header>
+      <MessagesContainer>
+        {messages.map((message) => (
+          <div key={message.id}>{message.message}</div>
+        ))}
+      </MessagesContainer>
       <InputContainer>
         <IconButton>
           <EmojiEmotionsIcon />
@@ -30,7 +35,7 @@ const ChatContent = () => {
         <IconButton>
           <AttachFileIcon />
         </IconButton>
-        <Input placeholder='Type a messagge' />
+        <Input placeholder="Type a messagge" />
         <IconButton>
           <MicIcon />
         </IconButton>
@@ -44,6 +49,7 @@ export default ChatContent;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 const Header = styled.div`
@@ -89,4 +95,10 @@ const Input = styled.input`
   padding: 20px;
   margin-left: 15px;
   margin-right: 15px;
+`;
+
+const MessagesContainer = styled.div`
+  padding: 20px;
+  background-color: #e5ded8;
+  flex: 1;
 `;

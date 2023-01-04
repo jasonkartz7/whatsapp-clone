@@ -4,7 +4,7 @@
       "seconds": 1633358405,
       "nanoseconds": 777000000
     },
-    "users": ["emma@gmail.com", "alan@gmail.com"],
+    "users": ["test@gmail.com", "alan@gmail.com"],
     "name": "test",
     "latestMessage": "testing"
   },
