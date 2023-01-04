@@ -3,6 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import MicIcon from '@mui/icons-material/Mic';
 
 const ChatContent = () => {
   return (
@@ -20,6 +23,18 @@ const ChatContent = () => {
           <MoreVertIcon />
         </IconButton>
       </Header>
+      <InputContainer>
+        <IconButton>
+          <EmojiEmotionsIcon />
+        </IconButton>
+        <IconButton>
+          <AttachFileIcon />
+        </IconButton>
+        <Input placeholder='Type a messagge' />
+        <IconButton>
+          <MicIcon />
+        </IconButton>
+      </InputContainer>
     </Container>
   );
 };
@@ -54,4 +69,24 @@ const HeaderInfo = styled.div`
     font-size: 14px;
     color: gray;
   }
+`;
+
+const InputContainer = styled.form`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  bottom: 0;
+  background-color: #f0f0f0;
+  z-index: 100;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  outline: 0;
+  border: none;
+  border-radius: 30px;
+  padding: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
 `;
