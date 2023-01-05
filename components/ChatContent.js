@@ -107,4 +107,7 @@ const MessagesContainer = styled.div`
   padding: 20px;
   background-color: #e5ded8;
   flex: 1;
+  background-image: url('/bg-chat.png');
+  background-attachment: fixed;
+  background-repeat: repeat;
 `;
