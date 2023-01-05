@@ -23,24 +23,24 @@
   "version" "7.20.10"
 
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0":
-  "integrity" "sha512-t1ZjCluspe5DW24bn2Rr1CDb2v9rn/hROtg9a2tmd0+QYf4bsloYfLQzjG4qHPNMhWtKdGC33R5AxGR2Af2cBw=="
-  "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.20.7.tgz"
-  "version" "7.20.7"
+  "integrity" "sha512-XsMfHovsUYHFMdrIHkZphTN/2Hzzi78R08NuHfDBehym2VsPDL6Zn/JAD/JQdnRvbSsbQc4mVaU1m6JgtTEElg=="
+  "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.20.12.tgz"
+  "version" "7.20.12"
   dependencies:
     "@ampproject/remapping" "^2.1.0"
     "@babel/code-frame" "^7.18.6"
     "@babel/generator" "^7.20.7"
     "@babel/helper-compilation-targets" "^7.20.7"
-    "@babel/helper-module-transforms" "^7.20.7"
+    "@babel/helper-module-transforms" "^7.20.11"
     "@babel/helpers" "^7.20.7"
     "@babel/parser" "^7.20.7"
     "@babel/template" "^7.20.7"
-    "@babel/traverse" "^7.20.7"
+    "@babel/traverse" "^7.20.12"
     "@babel/types" "^7.20.7"
     "convert-source-map" "^1.7.0"
     "debug" "^4.1.0"
     "gensync" "^1.0.0-beta.2"
-    "json5" "^2.2.1"
+    "json5" "^2.2.2"
     "semver" "^6.3.0"
 
 "@babel/generator@^7.20.7":
@@ -97,7 +97,7 @@
   dependencies:
     "@babel/types" "^7.18.6"
 
-"@babel/helper-module-transforms@^7.20.7":
+"@babel/helper-module-transforms@^7.20.11":
   "integrity" "sha512-uRy78kN4psmji1s2QtbtcCSaj/LILFDp0f/ymhpQH5QY3nljUZCaNWz9X1dEj/8MBdBEFECs7yRhKn8i7NjZgg=="
   "resolved" "https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.20.11.tgz"
   "version" "7.20.11"
@@ -199,10 +199,10 @@
     "@babel/parser" "^7.20.7"
     "@babel/types" "^7.20.7"
 
-"@babel/traverse@^7.20.10", "@babel/traverse@^7.20.7", "@babel/traverse@^7.4.5":
-  "integrity" "sha512-oSf1juCgymrSez8NI4A2sr4+uB/mFd9MXplYGPEBnfAuWmmyeVcHa6xLPiaRBcXkcb/28bgxmQLTVwFKE1yfsg=="
-  "resolved" "https://registry.npmjs.org/@babel/traverse/-/traverse-7.20.10.tgz"
-  "version" "7.20.10"
+"@babel/traverse@^7.20.10", "@babel/traverse@^7.20.12", "@babel/traverse@^7.20.7", "@babel/traverse@^7.4.5":
+  "integrity" "sha512-MsIbFN0u+raeja38qboyF8TIT7K0BFzz/Yd/77ta4MsUsmP2RAnidIlwq7d5HFQrH/OZJecGV6B71C4zAgpoSQ=="
+  "resolved" "https://registry.npmjs.org/@babel/traverse/-/traverse-7.20.12.tgz"
+  "version" "7.20.12"
   dependencies:
     "@babel/code-frame" "^7.18.6"
     "@babel/generator" "^7.20.7"
@@ -1809,7 +1809,7 @@
   dependencies:
     "minimist" "^1.2.0"
 
-"json5@^2.2.1":
+"json5@^2.2.2":
   "integrity" "sha512-46Tk9JiOL2z7ytNQWFLpj99RZkVgeHf87yGQKsIkaPz1qSH9UczKH1rO7K3wgRselo0tYMUNfecYpm/p1vC7tQ=="
   "resolved" "https://registry.npmjs.org/json5/-/json5-2.2.2.tgz"
   "version" "2.2.2"
