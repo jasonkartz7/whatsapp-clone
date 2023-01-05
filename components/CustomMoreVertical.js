@@ -3,6 +3,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { IconButton } from '@mui/material';
+import { signOut } from '@firebase/auth';
+import { auth } from '../firebase';
 
 export default function CustomMoreVertical() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,7 +44,7 @@ export default function CustomMoreVertical() {
         <MenuItem onClick={handleClose}>Acrhived</MenuItem>
         <MenuItem onClick={handleClose}>Starred</MenuItem>
         <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={() => signOut(auth)}>Logout</MenuItem>
       </Menu>
     </>
   );

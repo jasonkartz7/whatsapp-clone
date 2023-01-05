@@ -2,8 +2,13 @@ import { Button } from '@mui/material';
 import Image from 'next/image';
 import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
+import { auth, provider } from '../firebase';
+import { signInWithPopup } from '@firebase/auth';
 
 const login = () => {
+  const loginWithGoogle = () => {
+    signInWithPopup(auth, provider);
+  };
   return (
     <Container>
       <Login>
@@ -13,7 +18,13 @@ const login = () => {
           width={100}
           alt=""
         />
-        <Button style={{color:'gray'}} startIcon={<GoogleIcon />}>Login with Google</Button>
+        <Button
+          style={{ color: 'gray' }}
+          startIcon={<GoogleIcon />}
+          onClick={loginWithGoogle}
+        >
+          Login with Google
+        </Button>
       </Login>
     </Container>
   );
