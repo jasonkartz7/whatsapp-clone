@@ -6,6 +6,7 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MicIcon from '@mui/icons-material/Mic';
 import messages from '../data/messages.json';
+import Message from './Message';
 
 const ChatContent = () => {
   return (
@@ -25,7 +26,12 @@ const ChatContent = () => {
       </Header>
       <MessagesContainer>
         {messages.map((message) => (
-          <div key={message.id}>{message.message}</div>
+          <Message
+            key={message.id}
+            user={message.user}
+            message={message.message}
+            timestamp={message.timestamp}
+          />
         ))}
       </MessagesContainer>
       <InputContainer>
