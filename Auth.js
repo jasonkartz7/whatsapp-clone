@@ -1,5 +1,4 @@
 import { useEffect, useContext, createContext, useState } from 'react';
-import 'firebase/compat/auth';
 import { auth, db } from './firebase';
 import Loading from './components/Loading';
 import Login from './pages/login';
@@ -27,8 +26,8 @@ export const AuthProvider = ({ children }) => {
         photoURL: user.photoURL,
       };
       await setDoc(doc(db, 'users', user.uid), userData);
-      console.log('user token', token);
       setCurrentUser(user);
+      console.log(user)
       setLoading(false);
     });
   }, []);
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     return <Login />;
   } else {
     return (
-      <AuthContext.Provider value={currentUser}>
+      <AuthContext.Provider value={{currentUser}}>
         {children}
       </AuthContext.Provider>
     );

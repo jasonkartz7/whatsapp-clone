@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 import styled from 'styled-components';
 import { Avatar, IconButton } from '@mui/material';
@@ -7,10 +8,30 @@ import CustomMoreVertical from './CustomMoreVertical';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import chats from '../data/chat.json';
-import Chat from './Chat';
+import Friend from './Friend';
+import { collection, where, getDocs, query } from '@firebase/firestore';
+import { useEffect, useState } from 'react';
+import { db } from '../firebase';
+import { useAuth } from '../Auth';
+
+
 
 const Sidebar = () => {
+  const [friends, setFriends] = useState([]);
+  const { currentUser } = useAuth();
+  console.log(currentUser?.email);
+  useEffect(() => {
+    async function fetchFriends() {
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '!=', currentUser?.email));
+      const querySnapshot = await getDocs(q);
+      console.log('querySnapshot', querySnapshot);
+      setFriends(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    }
+    fetchFriends();
+  }, []);
   return (
     <Container>
       <Header>
@@ -50,12 +71,20 @@ const Sidebar = () => {
           <SeacrhInput />
         </SearchBar>
       </SearchChat>
-      {chats.map((chat) => (
+      {/* {chats.map((chat) => (
         <Chat
           latestMessage={chat.latestMessage}
           name={chat.name}
           timestamp={chat.timestamp}
           photoURL={chat.photoURL}
+        />
+      ))} */}
+      {friends.map((friend) => (
+        <Friend
+          key={friend.id}
+          photoURL={friend.photoURL}
+          displayName={friend.displayName}
+          id={friend.id}
         />
       ))}
     </Container>
