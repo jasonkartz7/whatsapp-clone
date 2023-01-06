@@ -1,8 +1,9 @@
 import { useEffect, useContext, createContext, useState } from 'react';
 import 'firebase/compat/auth';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import Loading from './components/Loading';
 import Login from './pages/login';
+import { doc, serverTimestamp, setDoc } from '@firebase/firestore';
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
@@ -19,6 +20,13 @@ export const AuthProvider = ({ children }) => {
       }
 
       const token = await user.getIdToken();
+      const userData = {
+        displayName: user.displayName,
+        email: user.email,
+        lastSeen: serverTimestamp(),
+        photoURL: user.photoURL,
+      };
+      await setDoc(doc(db, 'users', user.uid), userData);
       console.log('user token', token);
       setCurrentUser(user);
       setLoading(false);
