@@ -14,18 +14,14 @@ import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../Auth';
 
-
-
 const Sidebar = () => {
   const [friends, setFriends] = useState([]);
   const { currentUser } = useAuth();
-  console.log(currentUser?.email);
   useEffect(() => {
     async function fetchFriends() {
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('email', '!=', currentUser?.email));
       const querySnapshot = await getDocs(q);
-      console.log('querySnapshot', querySnapshot);
       setFriends(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
