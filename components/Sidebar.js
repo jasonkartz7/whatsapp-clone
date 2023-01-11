@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   collection,
   getDocs,
@@ -23,6 +23,8 @@ import Chat from './Chat';
 const Sidebar = () => {
   const [friends, setFriends] = useState([]);
   const [chats, setChats] = useState([]);
+  const [searchFriends, setSearchFriends] = useState(false);
+  const inputAreaRef = useRef(null);
   const { currentUser } = useAuth();
   useEffect(() => {
     const chatsRef = collection(db, 'chats');
@@ -48,6 +50,21 @@ const Sidebar = () => {
       );
     }
     fetchFriends();
+  }, []);
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (!inputAreaRef.current.contains(e.target)) {
+        setTimeout(() => {
+          setSearchFriends(false);
+        }, 3000);
+      } else {
+        setSearchFriends(true);
+      }
+    };
+    document.addEventListener('mousedown', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
   }, []);
   return (
     <Container>
@@ -82,25 +99,35 @@ const Sidebar = () => {
       <SearchChat>
         <SearchBar>
           <SearchIcon />
-          <SearchInput />
+          <SearchInput
+            ref={inputAreaRef}
+            placeholder="Search or start a new chat"
+          />
         </SearchBar>
       </SearchChat>
-      {chats.map((chat) => (
-        <Chat
-          key={chat.id}
-          id={chat.id}
-          latestMessage={chat.latestMessage}
-          users={chat.users}
-        />
-      ))}
-      {/* {friends.map(friend => (
-                <Friend
-                    key={friend.id}
-                    photoURL={friend.photoURL}
-                    displayName={friend.displayName}
-                    id={friend.id}
-                />
-            ))} */}
+      {searchFriends ? (
+        <>
+          {friends.map((friend) => (
+            <Friend
+              key={friend.id}
+              photoURL={friend.photoURL}
+              displayName={friend.displayName}
+              id={friend.id}
+            />
+          ))}
+        </>
+      ) : (
+        <>
+          {chats.map((chat) => (
+            <Chat
+              key={chat.id}
+              id={chat.id}
+              latestMessage={chat.latestMessage}
+              users={chat.users}
+            />
+          ))}
+        </>
+      )}
     </Container>
   );
 };
