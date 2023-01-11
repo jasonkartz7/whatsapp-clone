@@ -1,23 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 import { Avatar } from '@mui/material';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import getFriendData from '../utils/getFriendData';
 
-const Chat = ({ photoURL, name, timestamp, latestMessage }) => {
+
+const Chat = ({ id, users, timestamp = '', latestMessage = 'Hi~~~' }) => {
   const router = useRouter();
   const enterChat = () => {
-    router.push('/chat/123123')
-  }
+    router.push('/chat/123123');
+  };
+  const [friend, setFriend] = useState({});
+  useEffect(() => {
+    if (users.length > 0) {
+      getFriendData(users).then((data) => {
+        setFriend(data);
+      });
+    }
+  }, []);
   return (
     <Container onClick={enterChat}>
-      <FrdAvatar src={photoURL} />
+      <FrdAvatar src={friend.photoURL} />
       <ChatContainer>
-        <div style={{ gridArea: 'name' }}>{name}</div>
+        <div style={{ gridArea: 'name' }}>{friend.displayName}</div>
         <div style={{ gridArea: 'latest_message' }}>{latestMessage}</div>
-        <div style={{ gridArea: 'time', fontSize: '14px' }}>
+        {/* <div style={{ gridArea: 'time', fontSize: '14px' }}>
           {moment(timestamp.seconds * 1000).format('LT')}
-        </div>
+        </div> */}
       </ChatContainer>
     </Container>
   );
