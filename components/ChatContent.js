@@ -1,21 +1,73 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, IconButton } from '@mui/material';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MicIcon from '@mui/icons-material/Mic';
 import messages from '../data/messages.json';
 import Message from './Message';
+import getFriendData from '../utils/getFriendData';
+import { useEffect, useState } from 'react';
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from '@firebase/firestore';
+import { useAuth } from '../Auth';
+import { db } from '../firebase';
+const ChatContent = ({ chat, chat_id }) => {
+  const [friend, setFriend] = useState({});
+  const chatParse = JSON.parse(chat);
+  console.log(chatParse.currentUser)
+  const [input, setInput] = useState('');
+  const { currentUser } = useAuth();
+  useEffect(() => {
+    if (chatParse.user?.length > 0) {
+      getFriendData(chatParse.users).then((data) => {
+        setFriend(data);
+      });
+    } else {
+      console.log('without chatParse');
+    }
+  }, [chat_id]);
 
-const ChatContent = () => {
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    //store the user active time
+    const usersRef = doc(db, 'users', currentUser.uid);
+    setDoc(usersRef, { lastSeen: serverTimestamp() }, { merge: true });
+    //send message
+    const messagesRef = collection(db, 'chats', chat_id, 'messages');
+    await addDoc(messagesRef, {
+      timestamp: serverTimestamp(),
+      message: input,
+      user: currentUser.email,
+      photoURL: currentUser.photoURL,
+    });
+    //add latest message and corresponding time
+    const chatRef = doc(db, 'chats', chat_id);
+    setDoc(
+      chatRef,
+      {
+        latestMessage: input,
+        timestamp: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    setInput('');
+    console.log('setinput');
+  };
   return (
     <Container>
       <Header>
-        <Avatar />
+        <Avatar src={friend.photoURL} />
         <HeaderInfo>
-          <h3>Test</h3>
-          <div>Last Active: 2 hours ago</div>
+          <h3>{friend.displayName}</h3>
+          <div>Last Active: 3 hours ago</div>
         </HeaderInfo>
         <IconButton>
           <SearchIcon />
@@ -36,12 +88,19 @@ const ChatContent = () => {
       </MessagesContainer>
       <InputContainer>
         <IconButton>
-          <EmojiEmotionsIcon />
+          <InsertEmoticonIcon />
         </IconButton>
         <IconButton>
           <AttachFileIcon />
         </IconButton>
-        <Input placeholder="Type a messagge" />
+        <Input
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type a message"
+          value={input}
+        />
+        <button hidden disabled={!input} type="submit" onClick={sendMessage}>
+          Send message
+        </button>
         <IconButton>
           <MicIcon />
         </IconButton>
