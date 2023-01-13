@@ -19,6 +19,7 @@ import {
 } from '@firebase/firestore';
 import { useAuth } from '../Auth';
 import { db } from '../firebase';
+import moment from 'moment';
 
 const ChatContent = ({ chat, chat_id }) => {
   const [friend, setFriend] = useState({});
@@ -52,18 +53,19 @@ const ChatContent = ({ chat, chat_id }) => {
     const chatRef = doc(db, 'chats', chat_id);
     setDoc(
       chatRef,
-      { latestMessage: input, timestaamp: serverTimestamp() },
+      { latestMessage: input, timestamp: serverTimestamp() },
       { merge: true }
     );
     setInput('');
   };
+  console.log(friend.lastSeen)
   return (
     <Container>
       <Header>
         <Avatar src={friend.photoURL} />
         <HeaderInfo>
           <h3>{friend.displayName}</h3>
-          <div>Last Active: 2 hours ago</div>
+          <div>Last Active: {moment(friend.lastSeen?.toDate()).fromNow()}</div>
         </HeaderInfo>
         <IconButton>
           <SearchIcon />
