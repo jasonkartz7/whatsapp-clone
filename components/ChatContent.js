@@ -10,20 +10,53 @@ import messages from '../data/messages.json';
 import Message from './Message';
 import { useEffect, useState } from 'react';
 import getFriendData from '../utils/getFriendData';
+import {
+  doc,
+  serverTimestamp,
+  setDoc,
+  collection,
+  addDoc,
+} from '@firebase/firestore';
+import { useAuth } from '../Auth';
+import { db } from '../firebase';
 
 const ChatContent = ({ chat, chat_id }) => {
   const [friend, setFriend] = useState({});
   const chatParse = JSON.parse(chat);
+  const [input, setInput] = useState('');
+  const { currentUser } = useAuth();
+
   useEffect(() => {
     if (chatParse.users?.length > 0) {
-      console.log('has chatParse');
       getFriendData(chatParse.users).then((data) => {
         setFriend(data);
       });
     } else {
       console.log('without chatParse');
     }
-  },[chat_id]);
+  }, [chat_id]);
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    //store the user active time
+    const usersRef = doc(db, 'users', currentUser.uid);
+    setDoc(usersRef, { lastSeen: serverTimestamp() }, { merge: true });
+    //send message
+    const messagesRef = collection(db, 'chats', chat_id, 'messages');
+    await addDoc(messagesRef, {
+      timestamp: serverTimestamp(),
+      messages: input,
+      user: currentUser.email,
+      photoURL: currentUser.photoURL,
+    });
+    //add latest message and corresponding time
+    const chatRef = doc(db, 'chats', chat_id);
+    setDoc(
+      chatRef,
+      { latestMessage: input, timestaamp: serverTimestamp() },
+      { merge: true }
+    );
+    setInput('');
+  };
   return (
     <Container>
       <Header>
@@ -56,7 +89,14 @@ const ChatContent = ({ chat, chat_id }) => {
         <IconButton>
           <AttachFileIcon />
         </IconButton>
-        <Input placeholder="Type a messagge" />
+        <Input
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type a messagge"
+          value={input}
+        />
+        <button hidden disabled={!input} type="submit" onClick={sendMessage}>
+          Send Message
+        </button>
         <IconButton>
           <MicIcon />
         </IconButton>
