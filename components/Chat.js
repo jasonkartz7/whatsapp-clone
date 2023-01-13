@@ -7,11 +7,10 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import getFriendData from '../utils/getFriendData';
 
-
 const Chat = ({ id, users, timestamp = '', latestMessage = 'Hi~~~' }) => {
   const router = useRouter();
   const enterChat = () => {
-    router.push('/chat/123123');
+    router.push(`/chat/${id}`);
   };
   const [friend, setFriend] = useState({});
   useEffect(() => {
